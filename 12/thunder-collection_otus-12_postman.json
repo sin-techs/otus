@@ -1,0 +1,46 @@
+{
+    "info": {
+        "_postman_id": "fb625192-25b5-4ea0-a0d8-62d97cf09e8c",
+        "name": "otus-12",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "http://arch.homework/health",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://arch.homework/health",
+                    "path": [
+                        "health"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "arch",
+                        "homework"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "http://arch.homework/otusapp/aeugene/health",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://arch.homework/otusapp/aeugene/health",
+                    "path": [
+                        "otusapp",
+                        "aeugene",
+                        "health"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "arch",
+                        "homework"
+                    ]
+                }
+            }
+        }
+    ]
+}
