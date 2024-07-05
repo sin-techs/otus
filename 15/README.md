@@ -13,6 +13,12 @@ Chart [helm-otus-15](helm-otus-15) contains:
 
 `helm upgrade -i -n app  --create-namespace otus-15 helm-otus-15`
 
+### API Schema
+
+Swagger UI: http://arch.homework/docs
+
+OpenAPI JSON: http://arch.homework/openapi.json
+
 
 
 ## Postman
