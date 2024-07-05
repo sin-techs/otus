@@ -1,0 +1,24 @@
+name: otus-15
+services:
+  mariadb:
+    image: mariadb:lts
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD-SHELL", 'mariadb-admin ping --password=$$MARIADB_ROOT_PASSWORD']
+      interval: 10s
+      timeout: 2s
+      retries: 10
+  app:
+    image: homework:15-crud
+    environment:
+      DB_URL: "mysql://root:password@mariadb/app"
+    ports:
+      - 80:8000
+    depends_on:
+       mariadb:
+        condition: service_healthy
+        restart: true
