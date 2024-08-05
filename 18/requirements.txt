@@ -1,0 +1,5 @@
+fastapi==0.111.0
+SQLAlchemy_Utils==0.41.2
+sqlmodel==0.0.19
+mysqlclient==2.2.4
+prometheus-fastapi-instrumentator==7.0.0

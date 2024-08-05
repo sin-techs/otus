@@ -1,0 +1,12 @@
+dependencies:
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 18.2.6
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 25.24.1
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 8.3.6
+digest: sha256:3f656469fd83c67257f8b46c2ad7209a1e15f9cbc85b603de8228c76084f07c6
+generated: "2024-07-30T19:58:58.6744881+03:00"
