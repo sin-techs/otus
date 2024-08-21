@@ -1,0 +1,14 @@
+{% include 'header.html' with context %}
+        <h1>Hello</h1>
+            <h2>Authorised!!!</h2>
+            <p>User: {{ user.login }} ({{ user.id }})</p>
+            <form action="/profile" method="post""> 
+            <p>First: <input type="text" value="{{ user.firstname }}" name="firstname" /></p>
+            <p>Last: <input type="text" value="{{ user.lastname }}" name="lastname" /></p>
+            <p>Email: <input type="text" value="{{ user.email }}" name="email" /></p>
+            <p>Age: <input type="text" value="{{ user.age }}" name="age" /></p>
+            <input id="submit" type="submit" value="Update" />  
+            </form>
+        {{ text }}
+    </body>
+</html>

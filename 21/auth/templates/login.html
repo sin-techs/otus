@@ -1,0 +1,14 @@
+
+<center><div>
+<form action="/auth/login" method="post" enctype="application/x-www-form-urlencoded">  
+    <label for="login">Login</label>  
+    <input type="text" value="admin" name="login" autofocus="autofocus" />  <br>
+    <label for="password">Password</label>  
+    <input type="password" value="password" name="password" />  <br>
+    <input type="hidden" value="{{ redir }}" name="redir" />
+    
+    <input id="submit" type="submit" value="Log in" />  
+</form> 
+<h3><font color={{ msg.color }}>{{ msg.text }}</font></h3>
+</div>
+</center>
