@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="shortcut icon" href="{{ url_for('static', path='/favicon.ico') }}">
+    </head>
+    <body>
+    Menu: 
+    {% if auth %}
+    <a href="/auth/logout">Logout</a>
+    <a href="/profile">Profile</a>
+    {% else %}
+    <a href="/auth/login">Login</a>
+    <a href="/register">Register</a>
+    {% endif %}
+        <br>
+        <hr>
