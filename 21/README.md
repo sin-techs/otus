@@ -8,7 +8,7 @@
 * ingress-nginx validates all inbound requests via `auth` service using JWT token in `x-auth` header
 * `app` service uses `x-auth-user` as user id information
 
-![](Auth architecture.drawio.png)
+![Arhitecture](Auth%20architecture.drawio.png)
 
 ## Helm-chart
 
