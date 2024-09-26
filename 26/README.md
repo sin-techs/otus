@@ -26,11 +26,11 @@
 
 
 
-![](Order architecture.drawio.png)
+![](Order%20architecture.drawio.png)
 
 ### Sequence diagram
 
-![](Order sequence diagram.drawio.png)
+![](Order%20sequence%20diagram.drawio.png)
 
 ## Helm-chart
 
