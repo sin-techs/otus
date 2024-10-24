@@ -1,0 +1,80 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-user
+  annotations: 
+    # nginx.ingress.kubernetes.io/auth-url: {{ .Values.auth.url }}
+    # nginx.ingress.kubernetes.io/auth-signin: {{ .Values.auth.signin }}
+    nginx.ingress.kubernetes.io/auth-response-headers: 'x-auth-user'
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Release.Name }}-user
+            port:
+              number: 8000
+        path: /user
+        pathType: Prefix
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-apiskip
+  annotations: 
+    nginx.ingress.kubernetes.io/auth-url: {{ .Values.auth.url }}
+    nginx.ingress.kubernetes.io/auth-response-headers: 'x-auth-user'
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Release.Name }}-user
+            port:
+              number: 8000
+        path: /api/users
+        pathType: Prefix
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-authskip
+  annotations: 
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Release.Name }}-user
+            port:
+              number: 8000
+        path: /$
+        pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: {{ .Release.Name }}-user
+            port:
+              number: 8000
+        path: /static
+        pathType: Prefix
+      - backend:
+          service:
+            name: {{ .Release.Name }}-user
+            port:
+              number: 8000
+        path: /register
+        pathType: ImplementationSpecific
+

@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+ 
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    </head>
+    <body>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>user_id</th>
+                <th>amount</th>
+                <th>stock_id</th>
+                <th>stock_count</th>
+                <th>Status</th>
+                <th>status_billing</th>
+                <th>status_stock</th>
+                <th>status_delivery</th>
+            </tr>
+        </thead>
+    </table>
+    <script>
+        $(document).ready( function () {
+        $('#example').DataTable({
+        ajax: {
+            url: 'http://arch.homework/api/order/order',
+            dataSrc: ''
+        },        
+        columns: [
+        { data: 'id' },
+            { data: 'user_id' },
+            { data: 'amount' },
+            { data: 'stock_id' },
+            { data: 'stock_count' },
+            { data: 'status' },
+            { data: 'status_billing' },
+            { data: 'status_stock' },
+            { data: 'status_delivery' },
+        ]
+    });
+});
+    </script>
+    </body>
+</html>

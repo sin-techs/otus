@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-auth
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: auth
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: auth
+    spec:
+      initContainers:
+      - name: init-cont
+        image: busybox:1.31
+        command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z {{ .Release.Name }}-mariadb 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
+      containers:
+      - name: {{ .Chart.Name }}
+        env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              key: db_url
+              name: db-secret
+        - name: JWT_SECRET
+          value: 8c32165ab1d5f54fd7fe910c4769f165
+        - name: JWT_ALGORITHM
+          value: HS256
+        
+        image:  sintech/homework:21-authvalidator
+        imagePullPolicy: IfNotPresent
+        # args: ["fastapi", "dev", "main.py", "--host", "0.0.0.0"]
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 8000
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        resources: {}
+        securityContext: {}
+      #   volumeMounts:
+      #     - name: dev
+      #       mountPath: /app
+      # volumes:
+      #   - name: dev
+      #     hostPath:
+      #       path: /learning/21/auth

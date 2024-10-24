@@ -1,0 +1,12 @@
+yamlApplicationConfig:
+  kafka:
+    clusters:
+      - name: local
+        bootstrapServers: otus-30-kafka.app.svc.cluster.local:9092
+  auth:
+    type: disabled
+
+  management:
+    health:
+      ldap:
+        enabled: false

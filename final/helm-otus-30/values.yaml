@@ -1,0 +1,145 @@
+# subcharts
+mariadb:
+  auth:
+    rootPassword: password
+  primary:
+    persistence:
+      enabled: false
+
+kafka:
+  listeners:
+    client:
+      protocol: PLAINTEXT
+  provisioning:
+    enabled: true
+    numPartitions: 3
+    replicationFactor: 3
+    topics:
+    - name: User
+    - name: Billing
+    - name: Order
+    - name: Stock
+    - name: Delivery
+
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: false
+  server:
+    prefixURL: /prometheus
+    baseURL: /prometheus
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      path: /prometheus
+      hosts: 
+        - arch.homework
+    global:
+      scrape_interval: 15s
+      scrape_timeout: 10s
+      evaluation_interval: 15s
+  extraScrapeConfigs: |
+    - job_name: fastapi_order
+      metrics_path: /metrics
+      static_configs:
+      - targets:
+        - otus-30-order:8000
+    - job_name: fastapi_billing
+      metrics_path: /metrics
+      static_configs:
+      - targets:
+        - otus-30-billing:8000
+    - job_name: fastapi_stock
+      metrics_path: /metrics
+      static_configs:
+      - targets:
+        - otus-30-stock:8000
+  prometheus-pushgateway:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+
+
+grafana:
+  enabled: true
+  env:
+    GF_SECURITY_ADMIN_USER: admin
+    GF_SECURITY_ADMIN_PASSWORD: grafana
+    GF_USERS_DEFAULT_THEME: light
+  grafana.ini:
+    server:
+      domain: arch.homework
+      root_url: https://arch.homework/grafana
+      serve_from_sub_path: true
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://otus-30-prometheus-server/prometheus
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    path: /grafana
+    hosts: 
+      - arch.homework
+
+# otus-30-helm
+db:
+  user: root
+  pass: password
+  dbname: app
+# host: {{ .Release.Name }}-mariadb
+
+auth:
+  signin: http://arch.homework/auth/login
+  url: http://otus-30-auth.app.svc.cluster.local:8000/validate
+
+
+deployment:
+  - name: user
+    image: sintech/homework:30-user
+  - name: order
+    image: sintech/homework:30-order
+  - name: billing
+    image: sintech/homework:30-billing
+  - name: notification
+    image: sintech/homework:30-notification
+  - name: stock
+    image: sintech/homework:30-stock
+  - name: delivery
+    image: sintech/homework:30-delivery
+
+
+ingress:
+  - name: order
+  - name: billing
+  - name: notification
+  - name: stock
+  - name: delivery
+
+
+service:
+  - name: auth
+    type: ClusterIP
+    port: 8000
+  - name: user
+    type: ClusterIP
+    port: 8000
+  - name: order
+    type: ClusterIP
+    port: 8000
+  - name: billing
+    type: ClusterIP
+    port: 8000
+  - name: notification
+    type: ClusterIP
+    port: 8000
+  - name: stock
+    type: ClusterIP
+    port: 8000
+  - name: delivery
+    type: ClusterIP
+    port: 8000
+
